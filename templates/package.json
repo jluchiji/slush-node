@@ -36,6 +36,7 @@
     "babel-eslint": "^4.1.6",
     "babel-plugin-transform-flow-strip-types": "^6.3.15",
     "babel-preset-es2015-node4": "^2.0.2",
+    "babel-preset-stage-3": "^6.3.13",
     "bluebird": "^2.10.2",
     "chai": "^2.3.0",
     "chai-as-promised": "^5.1.0",

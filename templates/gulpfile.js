@@ -7,8 +7,8 @@
 
 const gulp         = require('gulp');
 
-const fs           = require('fs');
 const del          = require('del');
+const flow         = require('gulp-flowtype');
 const babel        = require('gulp-babel');
 const mocha        = require('gulp-mocha');
 const eslint       = require('gulp-eslint');
@@ -20,9 +20,10 @@ const sourcemaps   = require('gulp-sourcemaps');
 /*!
  * Load plugin configuration files.
  */
-const package      = require('./package.json');
-const eslintrc     = package.eslintConfig;
-const babelrc      = package.babel;
+const pkg          = require('./package.json');
+const eslintrc     = pkg.eslintConfig;
+const babelrc      = pkg.babel;
+const flowrc       = pkg.flowConfig;
 
 /*!
  * Default build target.
@@ -63,6 +64,7 @@ const lint = function() {
 
   return gulp.src(['src/**/*.js'])
     .pipe(changed('lib'))
+    .pipe(flow(flowrc))
     .pipe(eslint(eslintrc))
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());

@@ -35,7 +35,6 @@
     "app-root-path": "^1.0.0",
     "babel-eslint": "^4.1.6",
     "babel-plugin-transform-flow-strip-types": "^6.3.15",
-    "babel-plugin-transform-regenerator": "^6.3.18",
     "babel-preset-es2015-node4": "^2.0.2",
     "bluebird": "^2.10.2",
     "chai": "^2.3.0",
@@ -71,7 +70,6 @@
       "stage-3"
     ],
     "plugins": [
-      "transform-regenerator",
       "transform-flow-strip-types"
     ]
   },

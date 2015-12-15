@@ -3,8 +3,9 @@ This is my personal [slush.js][1] generator for Node.js projects. It uses the
 following:
 
  + [Gulp.js][2] as the building task runner
- + [Babel][3] with ES7 support for transpiling
- + [ESLint][4] with customized [Airbnb][5] for linting
+ + [Babel][3] with ECMA262 stage-3+ support for transpiling
+ + [Flow][10] for static type checking
+ + [ESLint][4] with customized [Airbnb][5] config for linting
  + [Mocha][6], [Chai.js][7] and [Sinon][8] for testing
  + [Istanbul][9] for test coverage
 
@@ -26,3 +27,4 @@ $ slush node
 [7]: https://github.com/chaijs/chai
 [8]: https://github.com/sinonjs/sinon
 [9]: https://github.com/gotwarlost/istanbul
+[10]: https://github.com/facebook/flow

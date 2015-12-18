@@ -43,6 +43,7 @@
     "del": "^2.0.2",
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "0.0.8",
+    "eslint-plugin-babel": "^3.0.0",
     "express-mocks-http": "0.0.11",
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.1",

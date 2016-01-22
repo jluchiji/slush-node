@@ -4,15 +4,16 @@
  * @author  Denis Luchkin-Zhou <denis@ricepo.com>
  * @license MIT
  */
+require('babel-core/register');
 
 const gulp         = require('gulp');
 
 const del          = require('del');
-const flow         = require('gulp-flowtype');
 const babel        = require('gulp-babel');
 const mocha        = require('gulp-mocha');
 const eslint       = require('gulp-eslint');
 const notify       = require('gulp-notify');
+const isparta      = require('isparta');
 const changed      = require('gulp-changed');
 const istanbul     = require('gulp-istanbul');
 const sourcemaps   = require('gulp-sourcemaps');
@@ -23,7 +24,6 @@ const sourcemaps   = require('gulp-sourcemaps');
 const pkg          = require('./package.json');
 const eslintrc     = pkg.eslintConfig;
 const babelrc      = pkg.babel;
-const flowrc       = pkg.flowConfig;
 
 /*!
  * Default build target.
@@ -64,7 +64,6 @@ const lint = function() {
 
   return gulp.src(['src/**/*.js'])
     .pipe(changed('lib'))
-    .pipe(flow(flowrc))
     .pipe(eslint(eslintrc))
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
@@ -80,7 +79,8 @@ gulp.task('relint', ['clean'], lint);
 gulp.task('test', ['build'], function() {
 
   gulp.src([ 'test/index.spec.js' ], { read: false })
-  .pipe(mocha({ reporter: 'spec' }));
+  .pipe(mocha({ reporter: 'spec' }))
+  .once('end', () => process.exit());
 
 });
 
@@ -91,7 +91,10 @@ gulp.task('test', ['build'], function() {
 gulp.task('coverage', ['build'], function(done) {
 
   gulp.src(['lib/**/*.js'])
-    .pipe(istanbul())
+    .pipe(istanbul({
+      instrumenter: isparta.Instrumenter,
+      includeUntested: true
+    }))
     .pipe(istanbul.hookRequire())
     .on('finish', function() {
       gulp.src(['test/index.spec.js'])
@@ -101,7 +104,7 @@ gulp.task('coverage', ['build'], function(done) {
           reportOpts: { dir: 'coverage' },
           reporters: ['text-summary', 'html', 'lcov']
         }))
-        .on('end', done);
+        .once('end', () => process.exit());
     });
 
 });

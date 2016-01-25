@@ -68,7 +68,7 @@ const lint = function() {
     .pipe(changed('lib'))
     .pipe(eslint(eslintrc))
     .pipe(eslint.format())
-    .pipe(jsinspect(jsirc));
+    .pipe(jsinspect(jsirc))
     .pipe(eslint.failAfterError());
 
 };

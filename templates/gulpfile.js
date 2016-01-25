@@ -16,6 +16,7 @@ const notify       = require('gulp-notify');
 const isparta      = require('isparta');
 const changed      = require('gulp-changed');
 const istanbul     = require('gulp-istanbul');
+const jsinspect    = require('gulp-jsinspect');
 const sourcemaps   = require('gulp-sourcemaps');
 
 /*!
@@ -24,6 +25,7 @@ const sourcemaps   = require('gulp-sourcemaps');
 const pkg          = require('./package.json');
 const eslintrc     = pkg.eslintConfig;
 const babelrc      = pkg.babel;
+const jsirc        = pkg.jsInspectConfig;
 
 /*!
  * Default build target.
@@ -66,6 +68,7 @@ const lint = function() {
     .pipe(changed('lib'))
     .pipe(eslint(eslintrc))
     .pipe(eslint.format())
+    .pipe(jsinspect(jsirc));
     .pipe(eslint.failAfterError());
 
 };

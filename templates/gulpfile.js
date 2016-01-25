@@ -93,7 +93,7 @@ gulp.task('test', ['build'], function() {
  */
 gulp.task('coverage', ['build'], function(done) {
 
-  gulp.src(['lib/**/*.js'])
+  gulp.src(['src/**/*.js'])
     .pipe(istanbul({
       instrumenter: isparta.Instrumenter,
       includeUntested: true

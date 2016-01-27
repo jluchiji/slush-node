@@ -7,6 +7,7 @@
 require('babel-core/register');
 
 const gulp         = require('gulp');
+const gutil        = require('gulp-util');
 
 const del          = require('del');
 const babel        = require('gulp-babel');
@@ -18,6 +19,7 @@ const changed      = require('gulp-changed');
 const istanbul     = require('gulp-istanbul');
 const jsinspect    = require('gulp-jsinspect');
 const sourcemaps   = require('gulp-sourcemaps');
+const codeclimate  = require('gulp-codeclimate-reporter');
 
 /*!
  * Load plugin configuration files.
@@ -79,11 +81,11 @@ gulp.task('relint', ['clean'], lint);
 /*!
  * Run the test suit.
  */
-gulp.task('test', ['build'], function() {
+gulp.task('test', ['build'], function(done) {
 
   gulp.src([ 'test/index.spec.js' ], { read: false })
   .pipe(mocha({ reporter: 'spec' }))
-  .once('end', () => process.exit());
+  .once('end', done);
 
 });
 
@@ -107,8 +109,26 @@ gulp.task('coverage', ['build'], function(done) {
           reportOpts: { dir: 'coverage' },
           reporters: ['text-summary', 'html', 'lcov']
         }))
-        .once('end', () => process.exit());
+        .once('end', done);
     });
+
+});
+
+
+/*!
+ * Report test coverage to CodeClimate.
+ */
+gulp.task('coverage:report', [ 'coverage' ], function() {
+
+  const token = process.env.CODECLIMATE_REPO_TOKEN;
+  if (!token) {
+    gutil.log('Skipping CodeClimate coverage reporting.');
+    return null;
+  }
+
+  return gulp
+    .src([ 'coverage/lcov.info' ], { read: false })
+    .pipe(codeclimate({ token: token }));
 
 });
 

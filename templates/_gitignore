@@ -1,6 +1,7 @@
 # Logs
 logs
 *.log
+_*
 
 # Runtime data
 pids
@@ -9,6 +10,7 @@ pids
 
 # Coverage directory used by tools like istanbul
 coverage
+.nyc_output
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
@@ -27,3 +29,17 @@ node_modules
 lib
 app
 build
+
+# Node Foreman environment variables
+.envrc
+.env
+
+# Vagrant machine files
+.vagrant
+
+# Certificates
+*.pem
+*.key
+
+# Paw file, stage manually when needed
+*.paw

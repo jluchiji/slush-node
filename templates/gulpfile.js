@@ -32,7 +32,7 @@ gulp.task('default', [ 'rebuild' ]);
  * Delete previous builds.
  */
 gulp.task('clean', () =>
-  del([ `${out}/**` ])
+  del([ out + '/**' ])
 );
 
 
